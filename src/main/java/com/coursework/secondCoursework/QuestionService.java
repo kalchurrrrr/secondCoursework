@@ -8,5 +8,7 @@ public interface QuestionService {
 
     void removeQuestion(Question question);
 
+    Question getRandomQuestion();
+
     Collection<Question> getAllQuestions();
 }

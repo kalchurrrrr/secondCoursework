@@ -1,6 +1,5 @@
 package com.coursework.secondCoursework;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,7 +8,6 @@ import java.util.*;
 public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService questionService;
 
-    @Autowired
     public ExaminerServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
     }
@@ -23,16 +21,10 @@ public class ExaminerServiceImpl implements ExaminerService {
         Set<Question> selectedQuestions = new HashSet<>();
 
         while (selectedQuestions.size() < amount) {
-            Question randomQuestion = getRandomQuestion();
-            selectedQuestions.add(randomQuestion);
+            selectedQuestions.add(questionService.getRandomQuestion());
         }
 
-        return new ArrayList<>(selectedQuestions);
+        return new HashSet<>(selectedQuestions);
     }
 
-    private Question getRandomQuestion() {
-        Collection<Question> allQuestions = questionService.getAllQuestions();
-        int randomIndex = (int) (Math.random() * allQuestions.size());
-        return new ArrayList<>(allQuestions).get(randomIndex);
-    }
 }

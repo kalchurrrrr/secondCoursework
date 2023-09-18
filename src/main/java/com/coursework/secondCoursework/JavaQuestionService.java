@@ -1,23 +1,16 @@
 package com.coursework.secondCoursework;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
+@Service
 public class JavaQuestionService implements QuestionService {
     private final Collection<Question> questions;
 
     public JavaQuestionService() {
         this.questions = new ArrayList<>();
     }
-
-    @Autowired(required = false)
-    public JavaQuestionService(@Nullable QuestionService ignoredQuestionService) {
-        this.questions = new ArrayList<>();
-    }
-
     @Override
     public void addQuestion(Question question) {
         questions.add(question);
@@ -29,7 +22,16 @@ public class JavaQuestionService implements QuestionService {
     }
 
     @Override
+    public Question getRandomQuestion() {
+        int max = questions.size();
+        List<Question> questionsList = new ArrayList<>(questions);
+        return questionsList.get((int) (Math.random() * max));
+    }
+
+
+    @Override
     public Collection<Question> getAllQuestions() {
         return questions;
     }
+
 }

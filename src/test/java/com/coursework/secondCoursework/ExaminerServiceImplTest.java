@@ -6,9 +6,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class ExaminerServiceImplTest {
@@ -29,10 +29,17 @@ class ExaminerServiceImplTest {
         availableQuestions.add(new Question("Что такое Java?", "Java это язык программирования."));
         availableQuestions.add(new Question("Что такое ООП?", "ООП это объектно-ориентированное программирование."));
         when(questionService.getAllQuestions()).thenReturn(availableQuestions);
+        when(questionService.getRandomQuestion()).thenReturn(
+                new Question("Что такое Java?", "Java это язык программирования."),
+                new Question("Что такое Java?", "Java это язык программирования."),
+                new Question("Что такое ООП?", "ООП это объектно-ориентированное программирование.")
+        );
 
         Collection<Question> questions = examinerService.getQuestions(2);
 
         assertEquals(2, questions.size());
-        verify(questionService, times(2)).getAllQuestions();
+        for (Question question : questions) {
+            assertTrue(availableQuestions.contains(question));
+        }
     }
 }
